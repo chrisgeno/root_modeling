@@ -126,6 +126,7 @@ select driver_id,
        count(trip_id) as num_trips,
        sum(trip_distance) as total_distance
 from drivers_and_trips
+group by 1 order by 1
 ```
 
 [^back](#toc-table-of-contents)
