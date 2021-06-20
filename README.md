@@ -30,8 +30,8 @@ When considering a data selection problem with an already perfectly structured 2
 
 Even though this is not what we want. Quickly creating the query that provides the basic structure of the measurements asked for is something I like to do to setup a basic structure to think about. So I'll put that here and then build off of it.
 
-
-
+```sql:most_basic.sql
+```
 
 
 [^back](#toc-table-of-contents)
