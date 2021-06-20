@@ -107,7 +107,7 @@ In other scenarios it may not be appropriate to keep the reporting table in the 
 
 ## <a id="toc-testing-and-debugging"></a> Testing and Debugging:
 
-Data verification should be fairly straight forward since we've left vehicles and profiles untouched.
+Data verification should be fairly straight forward since we've left vehicles and profiles untouched and done a simple left join.
 
 Some test cases:
 1. The number of rows in our new reporting table should be equal to the number in the trips table. (count(*) from trips = count(*) from drivers_and_trips)
