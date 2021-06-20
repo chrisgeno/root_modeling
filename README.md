@@ -13,7 +13,7 @@
 
 ## <a id="toc-introduction"></a>Introduction:
 
-When considering a data selection problem with an already perfectly structured 2NF schema, my initial thought is to simply denormalize the data at the highest resolution required to minimize join performance hits and provide a basic reporting table. However, taking into account that "we often want to slice and dice these measurements" and we have a variety of types of analysts working with it with varied levels of query skill and tools, a partially denormalized schema that stands up to more performance scrutiny or "weird" tool generated queries is what I'll create in this instance.
+When considering a data selection problem with an already perfectly structured 2NF schema as provided, my initial thought is to simply denormalize the data at the highest resolution required to minimize join performance hits and provide a basic reporting table. However, taking into account that "we often want to slice and dice these measurements" and we have a variety of types of analysts working with it with varied levels of query skill and tools, a partially denormalized schema that stands up to more performance scrutiny or "weird" tool generated queries and related processes is what I'll create.
 
 [^back](#toc-table-of-contents)
 
@@ -21,9 +21,9 @@ When considering a data selection problem with an already perfectly structured 2
 
 * The data in the existing schema is already well formed. IE: dates aren't at impossible times in the future, people aren't a million years old. Essentially I won't check for outlier values with constraints that would obliterate statistics. 
 * Updates to important dimensions are relatively infrequent compared to the amount of analysis and ingestion we're doing, like marital status, birthdate, or license state
-* Users will have varying levels of skill and toolsets to access this data. IE: I will attempt to optimize for toosl like Tableau auto generating weird queries with suboptimal subqueries.
+* Users will have varying levels of skill and toolsets to access this data. IE: I will attempt to optimize for tools like Tableau auto generating weird queries with suboptimal subqueries.
 * These numbers do not need to be updated in real time. Some data staleness is tolerable so a job of some frequency like hourly or nightly keeps our data sufficiently up to date.
-* For simplification, I'll also assume we aren't doing analysis on the app's use itself. IE: the relationship between when a particular object is updated is less important than the actual statistics and dimensions generated through driving activities relevant to insurance rates.
+* For simplification, I'll also assume we aren't doing analysis on the app's use itself. IE: the relationship between how often or when a particular object is updated is less important than the actual statistics and dimensions generated through driving activities relevant to insurance rates. We're not looking for how often or why users might be updating their profile across various dimensions.
 
 [^back](#toc-table-of-contents)
 
@@ -59,9 +59,10 @@ In general, I expect to get a lot of datetime filtering in where clauses, and th
 
 At this point I'll point out the need to deal with updates to the original fields should, for example, someones birthdate or marital status change. In large sample sizes subtle changes causing data staleness may not have a noticeable impact but in this case I'll also retain the drivers updated_at field as a check constraint that verifies data consistency in an update job that runs at some frequency for completeness and correctness.
 
-At this point, I have a denormalized table encompassing the majority of the fields that will be used. 
+At this point, I believe I have a denormalized table encompassing the majority of the fields that will be used. Reducing what is likely the most prominent join and simplifying the primary dataset for analysis. It should be laid out such that a columnar database can filter and calculate on it efficiently despite the queries used to query it. Though some users may need to be encouraged to filter on the integer date part fields since the original datetime values have been left in for completeness.
 
-that should be laid out such that a columnar database can filter and calculate on it efficiently
+![image](https://user-images.githubusercontent.com/22456230/122688530-5a232980-d1e2-11eb-82a9-dfeeae1bd250.png)
+
 
 
 [^back](#toc-table-of-contents)
