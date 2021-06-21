@@ -113,6 +113,14 @@ Should the vehicle dimension dicing have been more important than I initially gu
 
 ![image](https://user-images.githubusercontent.com/22456230/122796405-f7826a00-d283-11eb-88cf-3e4217968733.png)
 
+A few things not addressed in my main notes, that are of present mind:
+
+* Not knowing what kind of compliance and security concerns we may have in this environment, I've tried to exclude any sort of personally identifying information. If necessary we can make this reporting table available to analysts or others that might not otherwise fit the necessary profile of someone who should have access to that data via a locked down sort of role security.
+* I haven't touched on disaster recovery or redundancy across geographic zones. I'd guess this is a distributed workforce working on a huge database, and I would usually tackle that sort of thing in a detailed architecture.
+* Finally, and perhaps most pertinently. I've done all of this assuming some sort of batch job processing is still acceptable. This is a tried and true mechanism I have the most experience with, but most industries are starting to move away from any sort of it and moving to a real time streaming framework for all data. While that could be done here, without knowing how the original table was fed, I decided that was out of scope, and likely too long winded, though it is likely the way of the future.
+
+
+
 A basic query for initial table creation:
 ``` sql
 select d.profile_id,
