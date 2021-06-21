@@ -128,6 +128,8 @@ select driver_id,
 from drivers_and_trips
 group by 1 order by 1
 ```
+So a simple EXCEPT query should return no rows.
+
 
 [^back](#toc-table-of-contents)
 
